@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab || www.codinglabweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website with Login & Registration Form</title>
+    <link rel="stylesheet" href="SIGN2.css" />
+    <!-- Unicons -->
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
+    />
+    <style>
+      /* Add styles for the role selection buttons */
+      .role_buttons {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .role_buttons button {
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 10px 20px;
+        margin: 0 10px;
+        border-radius: 25px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .role_buttons button.active {
+        background-color: #ff4757;
+        color: #fff;
+        border-color: #ff4757;
+      }
+      .role_buttons button:hover {
+        background-color: #ff6b81;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="nav">
+        <a href="main.html" class="nav_logo">
+          <img src="./img/logo.png" alt="" />
+        </a>
+        <button class="button" id="form-open">Login</button>
+      </nav>
+    </header>
+
+    <!-- Home -->
+    <section class="home">
+      <div class="form_container">
+        <i class="uil uil-times form_close"></i>
+
+        <!-- Role Selection -->
+        <div class="role_buttons">
+          <button id="staff-btn" class="active" onclick="showStaffForm()">Staff</button>
+          <button id="customer-btn" onclick="showCustomerForm()">Customer</button>
+        </div>
+
+        <!-- Staff Login Form -->
+        <div class="form login_form" id="staff-form" style="display: block;">
+          <form id="staff_login_form" action="main.html">
+            <h2>Staff Login</h2>
+
+            <div class="input_box">
+              <input type="email" placeholder="Enter your staff email" required />
+              <i class="uil uil-envelope-alt email"></i>
+            </div>
+            <div class="input_box">
+              <input type="password" placeholder="Enter your password" required />
+              <i class="uil uil-lock password"></i>
+              <i class="uil uil-eye-slash pw_hide"></i>
+            </div>
+
+            <div class="option_field">
+              <span class="checkbox">
+                <input type="checkbox" id="staff-check" />
+                <label for="staff-check">Remember me</label>
+              </span>
+              <a href="#" class="forgot_pw">Forgot password?</a>
+            </div>
+
+            <button class="button" type="submit">Login as Staff</button>
+
+            <div class="login_signup">
+              Don't have a staff account? <a href="#" id="staff-signup">Signup</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Customer Login Form -->
+        <div class="form login_form" id="customer-form" style="display: none;">
+          <form id="customer_login_form" action="main.html">
+            <h2>Customer Login</h2>
+                      <!-- Customer ID -->
+                      <div class="input_box">
+                        <input type="text" placeholder="Enter your customer ID" required />
+                        <i class="uil uil-user"></i>
+                      </div>
+            <div class="input_box">
+              <input type="password" placeholder="Enter your password" required />
+              <i class="uil uil-lock password"></i>
+              <i class="uil uil-eye-slash pw_hide"></i>
+            </div>
+
+            <div class="option_field">
+              <span class="checkbox">
+                <input type="checkbox" id="customer-check" />
+                <label for="customer-check">Remember me</label>
+              </span>
+              <a href="#" class="forgot_pw">Forgot password?</a>
+            </div>
+
+            <button class="button" type="submit">Login as Customer</button>
+
+            <div class="login_signup">
+              Don't have an account? <a href="#" id="customer-signup">Signup</a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Customer Signup Form -->
+        <div class="form signup_form" id="signup-form" style="display: none;">
+          <form id="signup_form">
+            <h2>Customer Signup</h2>
+            <!-- First Name -->
+            <div class="input_box">
+              <input type="text" placeholder="Enter your first name" required />
+              <i class="uil uil-user"></i>
+            </div>
+
+            <!-- Last Name -->
+            <div class="input_box">
+              <input type="text" placeholder="Enter your last name" required />
+              <i class="uil uil-user"></i>
+            </div>
+
+            <!-- Customer Background -->
+            <div class="input_box">
+              <input type="text" placeholder="Enter your background" required />
+              <i class="uil uil-info-circle"></i>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="input_box">
+              <input type="tel" placeholder="Enter your phone number" required />
+              <i class="uil uil-phone"></i>
+            </div>
+
+            <!-- Address -->
+            <div class="input_box">
+              <input type="text" placeholder="Enter your address" required />
+              <i class="uil uil-location-point"></i>
+            </div>
+
+            <button class="button" type="submit">Signup Now</button>
+
+            <div class="login_signup">
+              Already have an account? <a href="#" id="show-login">Login</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      function showStaffForm() {
+        document.getElementById("staff-form").style.display = "block";
+        document.getElementById("customer-form").style.display = "none";
+        document.getElementById("signup-form").style.display = "none";
+        document.getElementById("staff-btn").classList.add("active");
+        document.getElementById("customer-btn").classList.remove("active");
+      }
+
+      function showCustomerForm() {
+        document.getElementById("customer-form").style.display = "block";
+        document.getElementById("staff-form").style.display = "none";
+        document.getElementById("signup-form").style.display = "none";
+        document.getElementById("customer-btn").classList.add("active");
+        document.getElementById("staff-btn").classList.remove("active");
+      }
+
+      document.getElementById("staff-signup").addEventListener("click", function () {
+        document.getElementById("signup-form").style.display = "block";
+        document.getElementById("staff-form").style.display = "none";
+        document.getElementById("customer-form").style.display = "none";
+      });
+
+      document.getElementById("customer-signup").addEventListener("click", function () {
+        document.getElementById("signup-form").style.display = "block";
+        document.getElementById("staff-form").style.display = "none";
+        document.getElementById("customer-form").style.display = "none";
+      });
+
+      document.getElementById("show-login").addEventListener("click", function () {
+        document.getElementById("signup-form").style.display = "none";
+        document.getElementById("staff-form").style.display = "block";
+      });
+    </script>
+    <script src="SIGN2.js"></script>
+  </body>
+</html>

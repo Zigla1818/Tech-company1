@@ -1,0 +1,932 @@
+------create database Electro_sql
+use Electro_sql
+
+----CREATE TABLE Products(
+----    SN varchar(6) NOT NULL PRIMARY KEY, -- Now allows a 6-character string, including letters and numbers
+----    Category varchar(30) NOT NULL,
+----    PName varchar(35) NOT NULL,
+----    Model varchar(10),
+----    Battery varchar(10), -- Changed to varchar to allow text/numbers
+----    [Material Type] varchar(15) NOT NULL,
+----    Color varchar(20),
+----    Warranty varchar(10) NOT NULL -- Changed to varchar for flexibility in date formats
+----);
+
+----CREATE TABLE Customer(
+----    CID int NOT NULL PRIMARY KEY,
+----    [First Name] varchar(20),
+----    [Last Name] varchar(20),
+----    Background varchar(30) NOT NULL
+----);
+
+----CREATE TABLE [CPhone Number](
+----    [Phone Number] varchar(20) NOT NULL PRIMARY KEY, -- Changed to varchar to accommodate various phone number formats
+----    PNCID int FOREIGN KEY REFERENCES Customer(CID)
+----);
+
+----CREATE TABLE CEmail(
+----    Email varchar(50) NOT NULL PRIMARY KEY,
+----    ECID int FOREIGN KEY REFERENCES Customer(CID)
+----);
+
+----CREATE TABLE CAddress(
+----    Address varchar(40) NOT NULL PRIMARY KEY,
+----    ACID int FOREIGN KEY REFERENCES Customer(CID)
+----);
+
+----CREATE TABLE [CItems Purchased](
+----    [Items Purchased] varchar(200) NOT NULL PRIMARY KEY,
+----    IPCID int FOREIGN KEY REFERENCES Customer(CID)
+----);
+
+----CREATE TABLE Production(
+----    BID int NOT NULL PRIMARY KEY,
+----    PID int NOT NULL,
+----    [Start Date] varchar(10) NOT NULL, -- Changed to varchar for flexibility in date format
+----    PLocation varchar(20) NOT NULL,
+----    [End Date] varchar(10) NOT NULL, -- Changed to varchar for flexibility in date format
+----    Quantity int,
+----    [Cost Of P] int NOT NULL,
+----    [Quality Check] int NOT NULL
+----);
+
+----CREATE TABLE Released(
+----    RSN varchar(6) FOREIGN KEY REFERENCES Products (SN),
+----    RBID int FOREIGN KEY REFERENCES Production (BID),
+----    PRIMARY KEY (RSN, RBID)
+----);
+
+----CREATE TABLE Transactions(
+----    TID int NOT NULL PRIMARY KEY,
+----    [Payment Method] varchar(35),
+----    Currency varchar(35) NOT NULL,
+----    Cost int NOT NULL,
+----    [Transaction Date] varchar(10) NOT NULL, -- Changed to varchar for flexibility in date format
+----    Taxes int,
+----    PCID int FOREIGN KEY REFERENCES Customer(CID)
+----);
+
+----ALTER TABLE Production
+----ADD PCTID int FOREIGN KEY REFERENCES Transactions (TID);
+
+----CREATE TABLE Shipping(
+----    SPID int NOT NULL PRIMARY KEY,
+----    [Shipment Type] varchar(15),
+----    [Shipping Date] varchar(10),
+----    [Deliver Date] varchar(10),
+----    [Estimated Total Time] int
+----);
+
+----CREATE TABLE [Shipping Addresses](
+----    [Shipping Address] varchar(40) NOT NULL PRIMARY KEY,
+----    ASPID int FOREIGN KEY REFERENCES Shipping(SPID)
+----);
+
+----CREATE TABLE Orders(
+----    OID int NOT NULL PRIMARY KEY,
+----    [Customer Name] varchar(35) NOT NULL,
+----    Price int NOT NULL,
+----    [Order Request Date] varchar(10),
+----    [Order Deliver Date] varchar(10) NOT NULL,
+----    SSPID int FOREIGN KEY REFERENCES Shipping(SPID)
+----);
+
+----CREATE TABLE [OProducts Requested](
+----    [Products Requested] varchar(200) NOT NULL PRIMARY KEY,
+----    PROID int FOREIGN KEY REFERENCES Orders(OID)
+----);
+
+----CREATE TABLE Ordered(
+----    OCID int FOREIGN KEY REFERENCES Customer(CID),
+----    varchar(6) FOREIGN KEY REFERENCES Products(SN),
+----    OOID int FOREIGN KEY REFERENCES Orders(OID),
+----    Quantity int NOT NULL,
+----    PRIMARY KEY (OCID, OSSN, OOID)
+----);
+
+----CREATE TABLE Staff(
+----    ID int NOT NULL PRIMARY KEY,
+----    [Staff Name] varchar(35) NOT NULL,
+----    Age int,
+----    Gender varchar(9),
+----    Position varchar(20),
+----    Salary int NOT NULL,
+----    MSID int FOREIGN KEY REFERENCES Staff(ID)
+----);
+
+----CREATE TABLE [Marketing Campaigns](
+----    MCID int NOT NULL PRIMARY KEY,
+----    [Campaign Name] varchar(35) NOT NULL,
+----    Objective int NOT NULL,
+----    Budget int,
+----    [Target Audience] varchar(10),
+----    MCDate varchar(10),
+----    MCTID int FOREIGN KEY REFERENCES Transactions(TID)
+----);
+
+----CREATE TABLE Markets(
+----    MSN varchar(6) FOREIGN KEY REFERENCES Products(SN),
+----    MMCID int FOREIGN KEY REFERENCES [Marketing Campaigns](MCID),
+----    PRIMARY KEY (MSN, MMCID)
+----);
+
+----CREATE TABLE [Works in](
+----    SSID int FOREIGN KEY REFERENCES Staff(ID),
+----    WIMCID int FOREIGN KEY REFERENCES [Marketing Campaigns](MCID),
+----    PRIMARY KEY (SSID, WIMCID)
+----);
+
+----CREATE TABLE [Customer Support & Feedback](
+----    STID int NOT NULL PRIMARY KEY,
+----    [Customer Name] varchar(30),
+----    [Issue description] varchar(200) NOT NULL,
+----    Rating int
+----);
+
+----CREATE TABLE Reviews(
+----    RCID int FOREIGN KEY REFERENCES Customer(CID),
+----    RSSN varchar(6) FOREIGN KEY REFERENCES Products(SN),
+----    RSTID int FOREIGN KEY REFERENCES [Customer Support & Feedback](STID),
+----    PRIMARY KEY (RCID, RSSN, RSTID)
+----);
+
+
+    
+--	INSERT INTO Products (SN, Category, PName, Model, Battery, [Material Type], Color, Warranty)
+--VALUES
+
+	-- Laptops
+
+--    ('ASD124', 'Laptops', 'Asus', 'X500', '3200', 'Metal', 'Silver', '2027-12-01'),
+--    ('ASD125', 'Laptops', 'Asus', 'X510', '3300', 'Plastic', 'Black', '2026-11-20'),
+--    ('ASD126', 'Laptops', 'Asus', 'X520', '3500', 'Metal', 'Gray', '2025-10-10'),
+--    ('ASD127', 'Laptops', 'Asus', 'X530', '3400', 'Plastic', 'Red', '2024-09-30'),
+--    ('HPX457', 'Laptops', 'HP', 'Elite', '3800', 'Plastic', 'Black', '2026-05-15'),
+--    ('HPX458', 'Laptops', 'HP', 'Pavilion', '3700', 'Metal', 'Blue', '2025-12-01'),
+--    ('HPX459', 'Laptops', 'HP', 'Spectre', '3500', 'Aluminum', 'Silver', '2027-04-10'),
+--    ('HPX460', 'Laptops', 'HP', 'Omen', '3900', 'Plastic', 'Black', '2026-07-20'),
+--    ('DLX790', 'Laptops', 'Dell', 'Inspiron', '4000', 'Aluminum', 'Gray', '2025-05-30'),
+--    ('DLX791', 'Laptops', 'Dell', 'XPS', '4300', 'Metal', 'Silver', '2026-02-15'),
+--    ('DLX792', 'Laptops', 'Dell', 'Latitude', '4200', 'Plastic', 'Black', '2024-08-20'),
+--    ('DLX793', 'Laptops', 'Dell', 'Vostro', '3900', 'Plastic', 'Red', '2027-11-01'),
+--    ('LNV013', 'Laptops', 'Lenovo', 'IdeaPad', '3800', 'Metal', 'Blue', '2027-08-10'),
+--    ('LNV014', 'Laptops', 'Lenovo', 'ThinkPad', '4000', 'Plastic', 'Black', '2026-09-01'),
+--    ('LNV015', 'Laptops', 'Lenovo', 'Yoga', '4200', 'Aluminum', 'Silver', '2025-06-25'),
+--    ('LNV016', 'Laptops', 'Lenovo', 'Legion', '4300', 'Plastic', 'Red', '2024-07-30'),
+--    ('LNV017', 'Laptops', 'Lenovo', 'Ideapad', '3800', 'Metal', 'Green', '2027-06-10'),
+--    ('HPX461', 'Laptops', 'HP', 'ProBook', '3400', 'Aluminum', 'Gray', '2025-04-20'),
+--    ('HPX462', 'Laptops', 'HP', 'Spectre', '3700', 'Plastic', 'Silver', '2024-12-15'),
+--    ('DLX794', 'Laptops', 'Dell', 'G7', '4200', 'Metal', 'Silver', '2026-10-01'),
+--    ('DLX795', 'Laptops', 'Dell', 'Inspiron', '4300', 'Aluminum', 'Black', '2027-01-05'),
+--    ('DLX796', 'Laptops', 'Dell', 'Latitude', '3500', 'Plastic', 'Red', '2025-11-25'),
+--    ('DLX797', 'Laptops', 'Dell', 'Vostro', '3600', 'Metal', 'Blue', '2024-05-15'),
+--    ('LNV018', 'Laptops', 'Lenovo', 'Legion', '4200', 'Aluminum', 'Gray', '2026-12-01'),
+--    ('LNV019', 'Laptops', 'Lenovo', 'ThinkPad', '4400', 'Plastic', 'Silver', '2027-03-30'),
+--    ('LNV020', 'Laptops', 'Lenovo', 'Yoga', '3800', 'Plastic', 'Black', '2025-07-10'),
+--    ('LNV021', 'Laptops', 'Lenovo', 'Ideapad', '3500', 'Metal', 'Pink', '2024-09-05'),
+--    ('HPX463', 'Laptops', 'HP', 'EliteBook', '3800', 'Plastic', 'Silver', '2027-10-01'),
+--    ('HPX464', 'Laptops', 'HP', 'Pavilion', '4000', 'Aluminum', 'Gray', '2026-03-20'),
+--    ('HPX465', 'Laptops', 'HP', 'Spectre', '4200', 'Metal', 'Black', '2025-01-15'),
+--    ('HPX466', 'Laptops', 'HP', 'Omen', '3900', 'Plastic', 'White', '2024-11-20'),
+--    ('DLX798', 'Laptops', 'Dell', 'XPS', '4300', 'Aluminum', 'Silver', '2027-04-20'),
+--    ('DLX789', 'Laptops', 'Dell', 'Inspiron', NULL, 'Aluminum', 'Gray', '2025-03-10'),
+--    ('LNV012', 'Laptops', 'Lenovo', 'IdeaPad', NULL, 'Plastic', 'Blue', '2027-08-20'),
+
+--    -- Smartphones
+
+--    ('IPH111', 'Smartphones', 'iPhone', '14Pro', 3200, 'Metal', 'Silver', '2026-10-25'),
+--    ('XIA393', 'Smartphones', 'Xiaomi', 'Redmi10', 5000, 'Metal', 'White', '2027-01-10'),
+--    ('HON444', 'Smartphones', 'Honor', 'X8', 4500, 'Plastic', 'Blue', '2024-08-20'),
+--	  ('IPH112', 'Smartphones', 'iPhone', '14Pro', '3200', 'Metal', 'Silver', '2026-10-25'),
+--    ('IPH113', 'Smartphones', 'iPhone', '13Mini', '2900', 'Aluminum', 'Gold', '2025-11-15'),
+--    ('IPH114', 'Smartphones', 'iPhone', '14Pro Max', '4300', 'Metal', 'Space Gray', '2027-04-20'),
+--    ('IPH115', 'Smartphones', 'iPhone', '12', '2800', 'Aluminum', 'White', '2024-12-01'),
+--    ('SAM221', 'Smartphones', 'Samsung', 'S21', '4000', 'Plastic', 'Black', '2026-03-10'),
+--    ('SAM222', 'Smartphones', 'Samsung', 'S22', '4500', 'Metal', 'Blue', '2025-09-15'),
+--    ('SAM223', 'Smartphones', 'Samsung', 'Note 20', '4300', 'Aluminum', 'Silver', '2027-02-10'),
+--    ('SAM224', 'Smartphones', 'Samsung', 'Z Fold3', '4400', 'Plastic', 'Black', '2024-11-15'),
+--    ('XIA331', 'Smartphones', 'Xiaomi', 'Redmi10', '5000', 'Plastic', 'White', '2027-01-10'),
+--    ('XIA332', 'Smartphones', 'Xiaomi', 'Mi 11', '4600', 'Metal', 'Blue', '2026-06-20'),
+--    ('XIA333', 'Smartphones', 'Xiaomi', 'Redmi 9', '4800', 'Plastic', 'Black', '2025-05-15'),
+--    ('XIA334', 'Smartphones', 'Xiaomi', 'Redmi 11', '5000', 'Metal', 'Gray', '2027-09-30'),
+--    ('HON445', 'Smartphones', 'Honor', 'X8', '4200', 'Plastic', 'Blue', '2024-08-20'),
+--    ('HON446', 'Smartphones', 'Honor', 'X9', '4300', 'Aluminum', 'Black', '2026-12-01'),
+--    ('HON447', 'Smartphones', 'Honor', '20Pro', '4000', 'Plastic', 'Silver', '2025-02-10'),
+--    ('HON448', 'Smartphones', 'Honor', 'V30', '4200', 'Metal', 'White', '2027-06-15'),
+--    ('RED501', 'Smartphones', 'Redmi', 'Note 9', '5000', 'Plastic', 'Red', '2025-08-10'),
+--    ('RED502', 'Smartphones', 'Redmi', 'Note 10', '4700', 'Aluminum', 'Gray', '2026-05-01'),
+--    ('RED503', 'Smartphones', 'Redmi', 'K40', '4500', 'Metal', 'Silver', '2027-03-25'),
+--    ('RED504', 'Smartphones', 'Redmi', 'K50', '4600', 'Plastic', 'Black', '2024-07-15'),
+--    ('RLM510', 'Smartphones', 'Realme', '7Pro', '4000', 'Plastic', 'Red', '2026-02-20'),
+--    ('RLM511', 'Smartphones', 'Realme', 'GT', '4500', 'Aluminum', 'Blue', '2025-11-01'),
+--    ('RLM512', 'Smartphones', 'Realme', 'Narzo 50', '4800', 'Metal', 'Gray', '2027-07-10'),
+--    ('RLM513', 'Smartphones', 'Realme', 'X7', '4300', 'Plastic', 'Black', '2024-09-05'),
+--    ('ONE701', 'Smartphones', 'OnePlus', '9', '4500', 'Metal', 'Blue', '2026-08-15'),
+--    ('ONE702', 'Smartphones', 'OnePlus', '8T', '4200', 'Plastic', 'Gray', '2025-06-20'),
+--    ('ONE703', 'Smartphones', 'OnePlus', '10 Pro', '4700', 'Aluminum', 'Black', '2027-05-01'),
+--    ('ONE704', 'Smartphones', 'OnePlus', 'Nord 2', '4300', 'Metal', 'Silver', '2024-12-15'),
+--    ('GGP501', 'Smartphones', 'Google Pixel', '6', '4600', 'Plastic', 'White', '2025-09-10'),
+--    ('GGP502', 'Smartphones', 'Google Pixel', '6 Pro', '5000', 'Aluminum', 'Black', '2026-07-25'),
+--    ('GGP503', 'Smartphones', 'Google Pixel', '5a', '4500', 'Plastic', 'Blue', '2027-08-20'),
+--    ('GGP504', 'Smartphones', 'Google Pixel', '7', '4600', 'Metal', 'Silver', '2024-06-10'),
+
+--   -- Cameras
+--    ('KDK555', 'Cameras', 'Kodak', 'K10', 1200, 'Metal', 'Black', '2025-04-15'),
+--    ('FUJ666', 'Cameras', 'Fujifilm', 'XT4', 1500, 'Plastic', 'Gray', '2026-05-20'),
+--    ('NKN777', 'Cameras', 'Nikon', 'D850', NULL, 'Metal', 'Black', '2027-09-30'),
+--    ('CNL888', 'Cameras', 'Canon', 'EOSR', NULL, 'Plastic', 'White', '2024-12-12'),
+--    ('KDK557', 'Cameras', 'Kodak', 'M10', '1300', 'Plastic', 'Gray', '2026-06-10'),
+--    ('KDK558', 'Cameras', 'Kodak', 'Z50', '1400', 'Metal', 'Silver', '2027-05-25'),
+--    ('KDK559', 'Cameras', 'Kodak', 'X200', '1500', 'Plastic', 'Red', '2024-12-01'),
+--    ('FUJ667', 'Cameras', 'Fujifilm', 'XT5', '1700', 'Metal', 'Black', '2026-05-20'),
+--    ('FUJ668', 'Cameras', 'Fujifilm', 'XT3', '1600', 'Plastic', 'Silver', '2027-07-15'),
+--    ('FUJ669', 'Cameras', 'Fujifilm', 'X-E4', '1400', 'Metal', 'Gray', '2025-02-28'),
+--    ('FUJ670', 'Cameras', 'Fujifilm', 'X-T200', '1300', 'Plastic', 'Blue', '2024-11-20'),
+--    ('NKN778', 'Cameras', 'Nikon', 'D7500', '1800', 'Plastic', 'Black', '2025-09-10'),
+--    ('NKN779', 'Cameras', 'Nikon', 'D3500', '1700', 'Metal', 'Gray', '2026-07-30'),
+--    ('NKN780', 'Cameras', 'Nikon', 'Z50', '1600', 'Plastic', 'Red', '2027-01-25'),
+--    ('NKN781', 'Cameras', 'Nikon', 'D5600', '1900', 'Aluminum', 'Silver', '2024-10-15'),
+--    ('CNL889', 'Cameras', 'Canon', 'EOS 90D', '2000', 'Plastic', 'Black', '2026-03-05'),
+--    ('CNL890', 'Cameras', 'Canon', 'EOS M50', '1900', 'Metal', 'White', '2027-11-20'),
+--    ('CNL891', 'Cameras', 'Canon', 'EOS R6', '2500', 'Aluminum', 'Red', '2025-08-10'),
+
+----    -- Accessories
+--    ('AAP999', 'Accessories', 'Apple AirPods', NULL, NULL, 'Plastic', 'White', '2026-07-01'),
+--    ('SNK000', 'Accessories', 'Soundcore', NULL, NULL, 'Plastic', 'Black', '2025-11-15'),
+--    ('SDO321', 'Accessories', 'Sodo', NULL, NULL, 'Metal', 'Silver', '2025-03-25'),
+	
+--    ('SNK001', 'Accessories', 'Soundcore', NULL, NULL, 'Plastic', 'Black', '2025-11-15'),
+--    ('SDO001', 'Accessories', 'Sodo', NULL, NULL, 'Metal', 'Silver', '2025-03-25'),
+--    ('AAP101', 'Accessories', 'Apple AirPods', NULL, NULL, 'Plastic', 'Black', '2027-02-10'),
+--    ('SNK002', 'Accessories', 'Soundcore', NULL, NULL, 'Plastic', 'Red', '2026-09-20'),
+--    ('SDO002', 'Accessories', 'Sodo', NULL, NULL, 'Metal', 'Gold', '2024-12-12'),
+--    ('AAP102', 'Accessories', 'Apple AirPods', NULL, NULL, 'Plastic', 'Rose Gold', '2025-04-15'),
+--    ('SNK003', 'Accessories', 'Soundcore', NULL, NULL, 'Plastic', 'White', '2027-03-25'),
+--    ('SDO003', 'Accessories', 'Sodo', NULL, NULL, 'Metal', 'Black', '2026-01-30'),
+--    ('AAP103', 'Accessories', 'Apple AirPods', NULL, NULL, 'Plastic', 'Green', '2024-10-05'),
+--    ('SNK004', 'Accessories', 'Soundcore', NULL, NULL, 'Plastic', 'Blue', '2025-08-10'),
+--    ('SDO004', 'Accessories', 'Sodo', NULL, NULL, 'Metal', 'Red', '2026-11-01'),
+--    ('AAP104', 'Accessories', 'Apple AirPods', NULL, NULL, 'Plastic', 'Purple', '2027-04-20'),
+--    ('SNK005', 'Accessories', 'Soundcore', NULL, NULL, 'Plastic', 'Silver', '2024-06-25'),
+--    ('SDO005', 'Accessories', 'Sodo', NULL, NULL, 'Metal', 'Silver', '2025-05-05');
+
+
+-- Customer
+--INSERT INTO Customer (CID, [First Name], [Last Name], Background)
+--VALUES
+--(1001, 'Ahmed', 'Ali', 'Software Engineer'),
+--(1007, 'Mona', 'Hassan', 'Teacher'),
+--(1013, 'Youssef', 'Ibrahim', 'Doctor'),
+--(1025, 'Samira', 'Gamal', 'Engineer'),
+--(1042, 'Mohamed', 'Zaki', 'Artist'),
+--(1068, 'Hossam', 'Ahmed', 'Pharmacist'),
+--(1093, 'Dina', 'Mahmoud', 'Lawyer'),
+--(1101, 'Tamer', 'Fathy', 'Entrepreneur'),
+--(1124, 'Laila', 'Omar', 'Nurse'),
+--(1156, 'Rania', 'Mostafa', 'Architect'),
+--(1187, 'Zainab', 'Salah', 'Scientist'),
+--(1203, 'Khaled', 'Ghaly', 'Engineer'),
+--(1228, 'Fatma', 'Hussein', 'Writer'),
+--(1246, 'Sherif', 'Abdelrahman', 'Doctor'),
+--(1275, 'Ali', 'Zaki', 'Artist'),
+--(1309, 'Maha', 'Sayed', 'Teacher'),
+--(1331, 'Tarek', 'Gaber', 'Photographer'),
+--(1358, 'Noha', 'Tamer', 'Businesswoman'),
+--(1389, 'Ramy', 'Mahmoud', 'Professor'),
+--(1412, 'Reem', 'Zaki', 'Psychologist'),
+--(1445, 'Amr', 'Mohamed', 'Lawyer'),
+--(1467, 'Amina', 'Tarek', 'Software Developer'),
+--(1490, 'Hassan', 'El-Masry', 'Engineer'),
+--(1512, 'Khaled', 'Ramadan', 'Teacher'),
+--(1534, 'Farida', 'Fathy', 'Designer'),
+--(1568, 'Moustafa', 'Shaban', 'Consultant'),
+--(1596, 'Hala', 'Youssef', 'Scientist'),
+--(1622, 'Salah', 'Ibrahim', 'Doctor'),
+--(1648, 'Mahmoud', 'Rami', 'Teacher'),
+--(1670, 'Samiha', 'Farouk', 'Entrepreneur'),
+--(1695, 'Amira', 'Hassan', 'Architect'),
+--(1720, 'Omar', 'Ali', 'Photographer'),
+--(1742, 'Zaki', 'Gamal', 'Writer'),
+--(1776, 'Rania', 'Abdelrahman', 'Artist'),
+--(1798, 'Fatma', 'Zaki', 'Designer'),
+--(1821, 'Yasmin', 'Fathy', 'Businesswoman'),
+--(1843, 'Mahmoud', 'Gaber', 'Engineer'),
+--(1872, 'Reem', 'Mahmoud', 'Professor'),
+--(1901, 'Fady', 'Youssef', 'Scientist'),
+--(1926, 'Hossam', 'Zaki', 'Teacher'),
+--(1954, 'Maha', 'Gaber', 'Nurse'),
+--(1982, 'Youssef', 'Sayed', 'Consultant'),
+--(2010, 'Dalia', 'Omar', 'Lawyer'),
+--(2034, 'Ali', 'Mohamed', 'Software Developer');
+
+
+
+
+--  phone numbers
+--INSERT INTO [CPhone Number] ([Phone Number], PNCID)
+--VALUES
+--('01012345678', 1001),
+--('01234567890', 1007),
+--('01111223344', 1013),
+--('01022334455', 1025),
+--('01123456789', 1042),
+--('01034567890', 1068),
+--('01256789012', 1093),
+--('01045678901', 1101),
+--('01134567891', 1124),
+--('01245678902', 1156),
+--('01056789013', 1187),
+--('01167890123', 1203),
+--('01067890123', 1228),
+--('01278901234', 1246),
+--('01078901234', 1275),
+--('01178901234', 1309),
+--('01289012345', 1331),
+--('01089012345', 1358),
+--('01189012345', 1389),
+--('01012345679', 1412),
+--('01234567891', 1445),
+--('01123456790', 1467),
+--('01023456790', 1490),
+--('01212345678', 1512),
+--('01134567892', 1534),
+--('01045678902', 1568),
+--('01256789013', 1596),
+--('01167890124', 1622),
+--('01078901235', 1648),
+--('01178901235', 1670),
+--('01089012346', 1695),
+--('01289012346', 1720),
+--('01189012346', 1742),
+--('01012345680', 1776),
+--('01234567892', 1798),
+--('01045678903', 1821),
+--('01123456791', 1843),
+--('01234567893', 1872),
+--('01067890125', 1901),
+--('01178901236', 1926),
+--('01289012347', 1954),
+--('01012345681', 1982),
+--('01223456780', 2010),
+--('01034567891', 2034);
+
+
+
+--  email addresses
+--INSERT INTO CEmail (Email, ECID)
+--VALUES
+--('ahmed.ali@email.com', 1001),
+--('mona.hassan@email.com', 1007),
+--('youssef.ibrahim@email.com', 1013),
+--('samira.gamal@email.com', 1025),
+--('mohamed.zaki@email.com', 1042),
+--('hossam.ahmed@email.com', 1068),
+--('dina.mahmoud@email.com', 1093),
+--('tamer.fathy@email.com', 1101),
+--('laila.omar@email.com', 1124),
+--('rania.mostafa@email.com', 1156),
+--('zainab.salah@email.com', 1187),
+--('khaled.ghaly@email.com', 1203),
+--('fatma.hussein@email.com', 1228),
+--('sherif.abdelrahman@email.com', 1246),
+--('ali.zaki@email.com', 1275),
+--('maha.sayed@email.com', 1309),
+--('tarek.gaber@email.com', 1331),
+--('noha.tamer@email.com', 1358),
+--('ramy.mahmoud@email.com', 1389),
+--('reem.zaki@email.com', 1412),
+--('amr.mohamed@email.com', 1445),
+--('amina.tarek@email.com', 1467),
+--('hassan.elmasry@email.com', 1490),
+--('khaled.ramadan@email.com', 1512),
+--('farida.fathy@email.com', 1534),
+--('moustafa.shaban@email.com', 1568),
+--('hala.youssef@email.com', 1596),
+--('salah.ibrahim@email.com', 1622),
+--('mahmoud.rami@email.com', 1648),
+--('samiha.farouk@email.com', 1670),
+--('amira.hassan@email.com', 1695),
+--('omar.ali@email.com', 1720),
+--('zaki.gamal@email.com', 1742),
+--('rania.abdelrahman@email.com', 1776),
+--('fatma.zaki@email.com', 1798),
+--('yasmin.fathy@email.com', 1821),
+--('mahmoud.gaber@email.com', 1843),
+--('reem.mahmoud@email.com', 1872),
+--('fady.youssef@email.com', 1901),
+--('hossam.zaki@email.com', 1926),
+--('maha.gaber@email.com', 1954),
+--('youssef.sayed@email.com', 1982),
+--('dalia.omar@email.com', 2010),
+--('ali.mohamed@email.com', 2034);
+
+
+--INSERT INTO CAddress (Address, ACID)
+--VALUES
+--('123 Nile Street', 1001),
+--('456 Pyramid Road', 1007),
+--('789 Tahrir Square', 1013),
+--('101 Cleopatra Street', 1025),
+--('202 Ramses Avenue', 1042),
+--('303 Sphinx Road', 1068),
+--('404 King Tut Drive', 1093),
+--('505 Cleopatra Blvd', 1101),
+--('606 Nile Corniche', 1124),
+--('707 Pharaonic Street', 1156),
+--('808 Sphinx View', 1187),
+--('909 Abu Simbel Road', 1203),
+--('1010 Nile Tower', 1228),
+--('1111 Aswan Road', 1246),
+--('1212 Cleopatra Street', 1275),
+--('1313 Pyramid View', 1309),
+--('1414 Ramses Road', 1331),
+--('1515 King Tut Blvd', 1358),
+--('1616 Cleopatra Drive', 1389),
+--('1717 Nile Street', 1412),
+--('1818 Ramses Avenue', 1445),
+--('1919 Sphinx Road', 1467),
+--('2020 Cleopatra Boulevard', 1490),
+--('2121 Pyramid Road', 1512),
+--('2222 Tahrir Square', 1534),
+--('2323 Ramses Road', 1568),
+--('2424 Nile Corniche', 1596),
+--('2525 King Tut Drive', 1622),
+--('2626 Cleopatra Boulevard', 1648),
+--('2727 Pyramid View', 1670),
+--('2828 Sphinx View', 1695),
+--('2929 Ramses Avenue', 1720),
+--('3030 Tahrir Square', 1742),
+--('3131 King Tut Road', 1776),
+--('3232 Cleopatra Boulevard', 1798),
+--('3333 Sphinx Road', 1821),
+--('3434 Ramses Avenue', 1843),
+--('3535 King Tut Boulevard', 1872),
+--('3636 Nile Corniche', 1901),
+--('3737 Pyramid Road', 1926),
+--('3838 Sphinx View', 1954),
+--('3939 Ramses Avenue', 1982),
+--('4040 Nile Tower', 2010),
+--('4141 King Tut Boulevard', 2034);
+
+
+--INSERT INTO [CItems Purchased] ([Items Purchased], IPCID)
+--VALUES
+--('Laptop - Black, Laptop - Silver', 1001),
+--('Camera - Canon, Camera - Nikon', 1007),
+--('Smartphone - iPhone, Smartphone - Samsung', 1013),
+--('Smartphone - Xiaomi, Charger - Apple', 1025),
+--('Laptop - Dell, Mouse - Logitech', 1042),
+--('Camera - Fujifilm, Lens - Sigma', 1068),
+--('Smartphone - Realme, Power Bank - Anker', 1093),
+--('Headphones - Sony, Accessories - Apple', 1101),
+--('Smartphone - OnePlus, Tablet - Samsung', 1124),
+--('Camera - Kodak, Tripod - Manfrotto', 1156),
+--('Smartphone - Google Pixel, Case - OtterBox', 1187),
+--('Laptop - Asus, Wireless Mouse - HP', 1203),
+--('Camera - Canon, Lens - Tamron', 1228),
+--('Smartphone - Redmi, Screen Protector - ZAGG', 1246),
+--('Laptop - Lenovo, Charger - Anker', 1275),
+--('Smartphone - Oppo, USB Cable - Belkin', 1309),
+--('Smartwatch - Apple, Strap - Black', 1331),
+--('Camera - Nikon, Flash - Godox', 1358),
+--('Laptop - HP, Keyboard - Logitech', 1389),
+--('Smartphone - Samsung, Power Bank - Xiaomi', 1412),
+--('Laptop - Acer, Speaker - Bose', 1445),
+--('Smartphone - Honor, Wireless Earbuds - Jabra', 1467),
+--('Smartwatch - Garmin, Dock - Charging Station', 1490),
+--('Smartphone - iPhone, Tablet - iPad', 1512),
+--('Camera - Fujifilm, Lens - Canon', 1534),
+--('Laptop - Dell, Smartwatch - Garmin', 1568),
+--('Smartphone - Samsung, Headphones - Bose', 1596),
+--('Camera - Nikon, Memory Card - SanDisk', 1622),
+--('Smartphone - Xiaomi, Tablet - Huawei', 1648),
+--('Laptop - Lenovo, Wireless Mouse - Logitech', 1670),
+--('Smartwatch - Samsung, Power Bank - Anker', 1695),
+--('Camera - Sony, Flash - Neewer', 1720),
+--('Smartphone - Oppo, Speaker - JBL', 1742),
+--('Laptop - Acer, Wireless Charger - Anker', 1776),
+--('Smartphone - Realme, Bluetooth Speaker - Sony', 1798),
+--('Laptop - Asus, USB Drive - SanDisk', 1821),
+--('Smartwatch - Fitbit, Earbuds - Sennheiser', 1843),
+--('Smartphone - OnePlus, Case - Spigen', 1872),
+--('Camera - Canon, Tripod - Gitzo', 1901),
+--('Laptop - HP, Gaming Headset - Razer', 1926),
+--('Smartphone - iPhone, Wireless Charger - Belkin', 1954),
+--('Camera - Sony, Lens - Sigma', 1982),
+--('Laptop - Dell, Smartwatch - Samsung', 2010),
+--('Smartphone - Xiaomi, Speaker - Bose', 2034);
+
+--INSERT INTO Production (BID, PID, [Start Date], PLocation, [End Date], Quantity, [Cost Of P], [Quality Check])
+--VALUES
+--    (1, 26, '2022-11-20', 'Factory E', '2023-05-09', 683, 4772, 97),
+--    (2, 14, '2023-12-21', 'Factory E', '2024-03-27', 574, 3584, 87),
+--    (3, 12, '2023-04-13', 'Factory E', '2023-06-09', 882, 1580, 85),
+--    (4, 4, '2023-03-17', 'Factory B', '2023-06-22', 807, 1399, 73),
+--    (5, 1, '2023-06-29', 'Factory B', '2023-09-03', 389, 3814, 72),
+--    (6, 19, '2021-08-26', 'Factory E', '2021-12-23', 288, 2040, 71),
+--    (7, 12, '2020-08-24', 'Factory A', '2020-11-27', 146, 4618, 98),
+--    (8, 1, '2023-05-26', 'Factory B', '2023-09-03', 474, 2545, 73),
+--    (9, 9, '2023-04-10', 'Factory B', '2023-08-28', 741, 726, 74),
+--    (10, 11, '2023-05-04', 'Factory A', '2023-08-13', 758, 3551, 83);
+
+
+--INSERT INTO Transactions (TID, [Payment Method], Currency, Cost, [Transaction Date], Taxes, PCID)
+--VALUES
+    --(202401, 'Credit Card', 'USD', 500, '2024-01-15', 50, 1001),
+    --(202402, 'Debit Card', 'USD', 200, '2024-02-10', 20, 1007),
+    --(202403, 'PayPal', 'EUR', 120, '2024-03-05', 12, 1013),
+    --(202404, 'Credit Card', 'GBP', 350, '2024-04-20', 35, 1025),
+    --(202405, 'Debit Card', 'USD', 420, '2024-05-15', 42, 1042),
+    --(202406, 'Cash', 'EGP', 300, '2024-06-10', 30, 1068),
+    --(202407, 'Credit Card', 'USD', 1000, '2024-07-01', 100, 1093),
+    --(202408, 'PayPal', 'USD', 250, '2024-08-22', 25, 1101),
+    --(202409, 'Debit Card', 'USD', 600, '2024-09-15', 60, 1124),
+    --(202410, 'Credit Card', 'EUR', 800, '2024-10-03', 80, 1156),
+    --(202411, 'PayPal', 'GBP', 150, '2024-11-25', 15, 1187),
+    --(202412, 'Cash', 'EGP', 450, '2024-12-10', 45, 1203),
+    --(202501, 'Credit Card', 'USD', 700, '2025-01-12', 70, 1228),
+    --(202502, 'Debit Card', 'USD', 530, '2025-02-02', 53, 1246),
+    --(202503, 'PayPal', 'EUR', 620, '2025-03-15', 62, 1275),
+    --(202504, 'Cash', 'EGP', 150, '2025-04-20', 15, 1309),
+    --(202505, 'Credit Card', 'USD', 900, '2025-05-25', 90, 1331),
+    --(202506, 'Debit Card', 'USD', 350, '2025-06-10', 35, 1358),
+    --(202507, 'PayPal', 'USD', 500, '2025-07-05', 50, 1389),
+    --(202508, 'Cash', 'EGP', 270, '2025-08-14', 27, 1412),
+    --(202509, 'Credit Card', 'USD', 800, '2025-09-22', 80, 1445),
+    --(202510, 'Debit Card', 'EUR', 200, '2025-10-03', 20, 1467),
+    --(202511, 'PayPal', 'GBP', 400, '2025-11-12', 40, 1490),
+    --(202512, 'Credit Card', 'USD', 350, '2025-12-01', 35, 1512),
+    --(202601, 'Debit Card', 'USD', 150, '2026-01-18', 15, 1534),
+    --(202602, 'Cash', 'EGP', 800, '2026-02-14', 80, 1568),
+    --(202603, 'Credit Card', 'USD', 600, '2026-03-03', 60, 1596),
+    --(202513, 'Credit Card', 'USD', 450, '2025-12-01', 45, 1520),
+    --(202514, 'Debit Card', 'GBP', 350, '2026-01-10', 35, 1543),
+    --(202515, 'PayPal', 'USD', 600, '2026-02-05', 60, 1571),
+    --(202516, 'Cash', 'EGP', 550, '2026-03-15', 55, 1599);
+
+
+
+--INSERT INTO Shipping (SPID, [Shipment Type], [Shipping Date], [Deliver Date], [Estimated Total Time])
+--VALUES
+--    (10012024, 'Express', '2024-01-10', '2024-01-12', 2),
+--    (10072024, 'Standard', '2024-02-15', '2024-02-18', 3),
+--    (10132024, 'Express', '2024-03-20', '2024-03-23', 3),
+--    (10252024, 'Standard', '2024-04-05', '2024-04-08', 3),
+--    (10422024, 'Express', '2024-05-01', '2024-05-03', 2),
+--    (10682024, 'Standard', '2024-06-10', '2024-06-13', 3),
+--    (10932024, 'Express', '2024-07-12', '2024-07-14', 2),
+--    (11012024, 'Standard', '2024-08-15', '2024-08-18', 3),
+--    (11242024, 'Express', '2024-09-01', '2024-09-03', 2),
+--    (11562024, 'Standard', '2024-10-20', '2024-10-23', 3),
+--    (11872024, 'Express', '2024-11-07', '2024-11-09', 2),
+--    (12032024, 'Standard', '2024-12-03', '2024-12-06', 3),
+--    (12282025, 'Express', '2025-01-15', '2025-01-17', 2),
+--    (12462025, 'Standard', '2025-02-22', '2025-02-25', 3),
+--    (12752025, 'Express', '2025-03-18', '2025-03-20', 2),
+--    (13092025, 'Standard', '2025-04-08', '2025-04-11', 3),
+--    (13312025, 'Express', '2025-05-12', '2025-05-14', 2),
+--    (13582025, 'Standard', '2025-06-20', '2025-06-23', 3),
+--    (13892025, 'Express', '2025-07-05', '2025-07-07', 2),
+--    (14122025, 'Standard', '2025-08-10', '2025-08-13', 3),
+--    (14452025, 'Express', '2025-09-01', '2025-09-03', 2),
+--    (14672025, 'Standard', '2025-10-14', '2025-10-17', 3),
+--    (14902025, 'Express', '2025-11-25', '2025-11-27', 2),
+--    (15122025, 'Standard', '2025-12-05', '2025-12-08', 3),
+--    (15342025, 'Express', '2026-01-11', '2026-01-13', 2),
+--    (15682026, 'Standard', '2026-02-12', '2026-02-15', 3),
+--    (15962026, 'Express', '2026-03-05', '2026-03-07', 2),
+--    (16222026, 'Standard', '2026-04-01', '2026-04-04', 3),
+--    (16482026, 'Express', '2026-05-18', '2026-05-20', 2),
+--    (16702026, 'Standard', '2026-06-25', '2026-06-28', 3),
+--    (16952026, 'Express', '2026-07-14', '2026-07-16', 2);
+
+
+
+
+--INSERT INTO [Shipping Addresses] ([Shipping Address], ASPID)
+--VALUES
+--    ('123 Elm Street, Cairo, Egypt', 10012024),
+--    ('456 Nile Avenue, Giza, Egypt', 10072024),
+--    ('789 Alexandria Road, Alexandria, Egypt', 10132024),
+--    ('321 Tahrir Square, Cairo, Egypt', 10252024),
+--    ('654 Mohandessin, Giza, Egypt', 10422024),
+--    ('987 Cairo Tower, Cairo, Egypt', 10682024),
+--    ('234 Ramses Street, Cairo, Egypt', 10932024),
+--    ('876 Zamalek, Cairo, Egypt', 11012024),
+--    ('543 Heliopolis, Cairo, Egypt', 11242024),
+--    ('210 Maadi, Cairo, Egypt', 11562024),
+--    ('345 Downtown, Cairo, Egypt', 11872024),
+--    ('678 Shubra, Cairo, Egypt', 12032024),
+--    ('123 Talaat Harb, Cairo, Egypt', 12282025),
+--    ('456 Garden City, Cairo, Egypt', 12462025),
+--    ('789 Heliopolis, Cairo, Egypt', 12752025),
+--    ('321 Nasr City, Cairo, Egypt', 13092025),
+--    ('654 October City, Giza, Egypt', 13312025),
+--    ('987 Dokki, Giza, Egypt', 13582025),
+--    ('234 Maadi, Cairo, Egypt', 13892025),
+--    ('876 New Cairo, Cairo, Egypt', 14122025),
+--    ('543 Nasr City, Cairo, Egypt', 14452025),
+--    ('210 Zamalek, Cairo, Egypt', 14672025),
+--    ('345 Mohandessin, Giza, Egypt', 14902025),
+--    ('678 Giza City, Giza, Egypt', 15122025),
+--    ('123 Sheikh Zayed, Giza, Egypt', 15342025),
+--    ('456 New Cairo, Cairo, Egypt', 15682026),
+--    ('789 Maadi, Cairo, Egypt', 15962026),
+--    ('321 Heliopolis, Cairo, Egypt', 16222026),
+--    ('654 Downtown, Cairo, Egypt', 16482026),
+--    ('987 6th of October City, Giza, Egypt', 16702026),
+--    ('234 Garden City, Cairo, Egypt', 16952026);
+
+
+--INSERT INTO Orders (OID, [Customer Name], Price, [Order Request Date], [Order Deliver Date], SSPID)
+--VALUES
+--    (1234, CONCAT('Ahmed', ' ', 'Ali'), 55000, '2024-01-15', '2024-01-20', 10012024),
+--    (5678, CONCAT('Mona', ' ', 'Hassan'), 48000, '2024-02-02', '2024-02-08', 10072024),
+--    (2345, CONCAT('Youssef', ' ', 'Ibrahim'), 46000, '2024-02-10', '2024-02-15', 10132024),
+--    (8765, CONCAT('Samira', ' ', 'Gamal'), 52000, '2024-03-01', '2024-03-05', 10252024),
+--    (4321, CONCAT('Mohamed', ' ', 'Zaki'), 49500, '2024-03-22', '2024-03-27', 10422024),
+--    (6789, CONCAT('Hossam', ' ', 'Ahmed'), 47000, '2024-04-10', '2024-04-15', 10682024),
+--    (9876, CONCAT('Dina', ' ', 'Mahmoud'), 51000, '2024-04-20', '2024-04-25', 10932024),
+--    (1123, CONCAT('Tamer', ' ', 'Fathy'), 54000, '2024-05-10', '2024-05-15', 11012024),
+--    (4567, CONCAT('Laila', ' ', 'Omar'), 49000, '2024-05-25', '2024-05-30', 11242024),
+--    (7890, CONCAT('Rania', ' ', 'Mostafa'), 53000, '2024-06-05', '2024-06-10', 11562024),
+--    (1011, CONCAT('Zainab', ' ', 'Salah'), 55000, '2024-06-18', '2024-06-23', 11872024),
+--    (1314, CONCAT('Khaled', ' ', 'Ghaly'), 47500, '2024-07-01', '2024-07-05', 12032024),
+--    (1516, CONCAT('Fatma', ' ', 'Hussein'), 56000, '2024-07-15', '2024-07-20', 12282025),
+--    (1718, CONCAT('Sherif', ' ', 'Abdelrahman'), 48000, '2024-08-02', '2024-08-07', 12462025),
+--    (1910, CONCAT('Ali', ' ', 'Zaki'), 49000, '2024-08-20', '2024-08-25', 12752025),
+--    (2021, CONCAT('Maha', ' ', 'Sayed'), 51000, '2024-09-10', '2024-09-15', 13092025),
+--    (2223, CONCAT('Tarek', ' ', 'Gaber'), 49500, '2024-09-25', '2024-09-30', 13312025),
+--    (2425, CONCAT('Noha', ' ', 'Tamer'), 52000, '2024-10-05', '2024-10-10', 13582025),
+--    (2627, CONCAT('Ramy', ' ', 'Mahmoud'), 46000, '2024-10-18', '2024-10-23', 13892025),
+--    (2829, CONCAT('Reem', ' ', 'Mahmoud'), 49500, '2024-11-01', '2024-11-05', 14122025),
+--    (3031, CONCAT('Amira', ' ', 'Hassan'), 47000, '2024-11-12', '2024-11-16', 14452025),
+--    (3233, CONCAT('Omar', ' ', 'Ali'), 46000, '2024-11-25', '2024-11-30', 14672025),
+--    (3435, CONCAT('Zaki', ' ', 'Gamal'), 52000, '2024-12-05', '2024-12-10', 14902025),
+--    (3637, CONCAT('Rania', ' ', 'Abdelrahman'), 49500, '2024-12-15', '2024-12-20', 15122025),
+--    (3839, CONCAT('Fatma', ' ', 'Zaki'), 56000, '2025-01-01', '2025-01-05', 15342025),
+--    (4041, CONCAT('Yasmin', ' ', 'Fathy'), 53000, '2025-01-10', '2025-01-15', 15682026),
+--    (4243, CONCAT('Mahmoud', ' ', 'Gaber'), 51000, '2025-02-02', '2025-02-05', 15962026),
+--    (4445, CONCAT('Reem', ' ', 'Mahmoud'), 46000, '2025-03-10', '2025-03-15', 16222026),
+--    (4647, CONCAT('Fady', ' ', 'Youssef'), 55000, '2025-04-01', '2025-04-05', 16482026),
+--	  (6709, CONCAT('Tamer', ' ', 'Fathy'), 49000, '2024-06-10', '2024-06-15', 10932024),
+--    (9806, CONCAT('Rania', ' ', 'Mostafa'), 53000, '2024-07-15', '2024-07-20', 11012024);
+
+
+
+
+--INSERT INTO [OProducts Requested] ([Products Requested], PROID)
+--VALUES
+
+--    ('Smartphone - iPhone, Smartphone - Samsung', 2345),
+--    ('Smartphone - Xiaomi, Charger - Apple', 8765),
+--    ('Laptop - Dell, Mouse - Logitech', 4321),
+--    ('Camera - Fujifilm, Lens - Sigma', 6789),
+--    ('Smartphone - Realme, Power Bank - Anker', 9876),
+--    ('Headphones - Sony, Accessories - Apple', 1123),
+--    ('Smartphone - OnePlus, Tablet - Samsung', 4567),
+--    ('Camera - Kodak, Tripod - Manfrotto', 7890),
+--    ('Smartphone - Google Pixel, Case - OtterBox', 1011),
+--    ('Laptop - Asus, Wireless Mouse - HP', 1314),
+--    ('Camera - Canon, Lens - Tamron', 1516),
+--    ('Smartphone - Redmi, Screen Protector - ZAGG', 1718),
+--    ('Laptop - Lenovo, Charger - Anker', 1910),
+--    ('Smartphone - Oppo, USB Cable - Belkin', 2021),
+--    ('Smartwatch - Apple, Strap - Black', 2223),
+--    ('Camera - Nikon, Flash - Godox', 2425),
+--    ('Laptop - HP, Keyboard - Logitech', 2627),
+--    ('Smartphone - Samsung, Power Bank - Xiaomi', 2829),
+--    ('Laptop - Acer, Speaker - Bose', 3031),
+--    ('Smartphone - Honor, Wireless Earbuds - Jabra', 3233),
+--    ('Smartwatch - Garmin, Dock - Charging Station', 3435),
+--    ('Smartphone - iPhone, Tablet - iPad', 3637),
+--    ('Camera - Fujifilm, Lens - Canon', 3839),
+--    ('Laptop - Dell, Smartwatch - Garmin', 4041),
+--    ('Smartphone - Samsung, Headphones - Bose', 4243),
+--    ('Camera - Nikon, Memory Card - SanDisk', 4445),
+--    ('Smartphone - Xiaomi, Tablet - Huawei', 4647),
+--    ('Laptop - Lenovo, Wireless Mouse - Logitech', 6709),
+--    ('Smartwatch - Samsung, Power Bank - Anker', 9806);
+ 
+ --	Ordered table
+--INSERT INTO Ordered (OCID, OSSN, OOID, Quantity)
+--VALUES
+--    (1001, 'ASD124', 1011, 3),
+--    (1007, 'HPX457', 1123, 5),
+--    (1013, 'DLX790', 1234, 2),
+--    (1025, 'IPH111', 1314, 1),
+--    (1042, 'XIA393', 1516, 4),
+--    (1068, 'KDK555', 1718, 7),
+--    (1093, 'FUJ666', 1910, 3),
+--    (1101, 'NKN777', 2021, 6),
+--    (1124, 'CNL888', 2223, 2),
+--    (1156, 'KDK557', 2345, 5),
+--    (1187, 'FUJ667', 2425, 4),
+--    (1203, 'NKN778', 2627, 8),
+--    (1228, 'KDK559', 2829, 1),
+--    (1246, 'FUJ668', 3031, 9),
+--    (1275, 'NKN780', 3233, 3),
+--    (1309, 'DLX793', 3435, 7),
+--    (1331, 'SAM221', 3637, 6),
+--    (1358, 'IPH113', 3839, 2),
+--    (1389, 'SAM224', 4041, 4),
+--    (1412, 'XIA332', 4243, 5),
+--    (1445, 'SAM222', 4321, 3),
+--    (1467, 'XIA333', 4445, 7),
+--    (1490, 'FUJ669', 4567, 2),
+--    (1512, 'KDK558', 4647, 8),
+--    (1534, 'NKN779', 5678, 4),
+--    (1568, 'FUJ670', 6709, 6),
+--    (1596, 'DLX791', 6789, 3),
+--    (1622, 'IPH114', 7890, 5),
+--    (1648, 'HPX459', 8765, 4),
+--    (1670, 'HPX460', 9806, 7),
+--    (1695, 'DLX792', 9876, 2),
+--    (1720, 'ASD127', 1011, 9),
+--    (1742, 'ASD125', 1123, 4),
+--    (1776, 'DLX793', 1234, 6),
+--    (1798, 'ASD126', 1314, 3),
+--    (1821, 'IPH112', 1516, 7),
+--    (1843, 'SAM223', 1718, 5),
+--    (1872, 'KDK558', 1910, 6),
+--    (1901, 'DLX790', 2021, 8),
+--    (1926, 'NKN778', 2223, 2),
+--    (1954, 'FUJ667', 2345, 4),
+--    (1982, 'KDK557', 2425, 6),
+--    (2010, 'XIA331', 2627, 3),
+--    (2034, 'HPX458', 2829, 5);
+
+
+--INSERT INTO Staff (ID, [Staff Name], Age, Gender, Position, Salary, MSID)
+--VALUES
+--    (2020001, 'Ahmed Hassan', 45, 'Male', 'Manager', 20000, NULL),
+--    (2020002, 'Mona Youssef', 38, 'Female', 'Technician', 12000, 2020001),
+--    (2020003, 'Youssef Ibrahim', 30, 'Male', 'Sales Representative', 9000, 2020001),
+--    (2021001, 'Samira Gamal', 28, 'Female', 'Technician', 11000, 2020001),
+--    (2021002, 'Mohamed Zaki', 50, 'Male', 'Manager', 18000, NULL),
+--    (2021003, 'Hossam Ahmed', 40, 'Male', 'Technician', 14000, 2021002),
+--    (2022001, 'Dina Mahmoud', 35, 'Female', 'Sales Representative', 9500, 2021002),
+--    (2022002, 'Tamer Fathy', 42, 'Male', 'Technician', 13000, 2021002),
+--    (2022003, 'Laila Omar', 29, 'Female', 'Sales Representative', 8500, 2021002),
+--    (2022004, 'Rania Mostafa', 55, 'Female', 'Manager', 21000, NULL),
+--    (2023001, 'Zainab Salah', 33, 'Female', 'Technician', 12500, 2022004),
+--    (2023002, 'Khaled Ghaly', 37, 'Male', 'Sales Representative', 9500, 2022004),
+--    (2023003, 'Fatma Hussein', 40, 'Female', 'Technician', 14000, 2022004),
+--    (2023004, 'Sherif Abdelrahman', 28, 'Male', 'Sales Representative', 8000, 2022004),
+--    (2023005, 'Ali Zaki', 45, 'Male', 'Manager', 19000, NULL),
+--    (2024001, 'Maha Sayed', 32, 'Female', 'Technician', 11500, 2023005),
+--    (2024002, 'Tarek Gaber', 36, 'Male', 'Technician', 13500, 2023005),
+--    (2024003, 'Noha Tamer', 30, 'Female', 'Sales Representative', 8900, 2023005),
+--    (2024004, 'Ramy Mahmoud', 29, 'Male', 'Technician', 12000, 2023005),
+--    (2024005, 'Reem Zaki', 48, 'Female', 'Manager', 20000, NULL);
+
+
+--ALTER TABLE [Marketing Campaigns]
+--    ALTER COLUMN Objective CHAR(100);
+
+---- Modify 'Target Audience' column to CHAR(100)
+--ALTER TABLE [Marketing Campaigns]
+--    ALTER COLUMN [Target Audience] CHAR(100);
+
+
+--INSERT INTO [Marketing Campaigns] (MCID, [Campaign Name], Objective, Budget, [Target Audience], MCDate, MCTID)
+--VALUES
+--    (202401, 'Holiday Sale', 'Increase Sales', 50000, 'Teens', '2024-01-01', 202401),
+--    (202402, 'Summer Promo', 'Brand Awareness', 75000, 'Adults', '2024-02-15', 202402),
+--    (202403, 'New Year Campaign', 'Product Launch', 100000, 'Professionals', '2024-03-01', 202403),
+--    (202404, 'Spring Discount', 'Customer Retention', 120000, 'Families', '2024-04-10', 202404),
+--    (202405, 'Winter Special', 'Lead Generation', 150000, 'Shoppers', '2024-05-05', 202405),
+--    (202406, 'Back to School', 'User Engagement', 50000, 'Students', '2024-06-01', 202406),
+--    (202407, 'Black Friday Sale', 'Increase Sales', 75000, 'Shoppers', '2024-07-01', 202407),
+--    (202408, 'Tech Launch', 'Brand Awareness', 100000, 'Tech Enthusiasts', '2024-08-15', 202408),
+--    (202409, 'Christmas Campaign', 'Product Launch', 120000, 'Families', '2024-09-10', 202409),
+--    (202410, 'Product Discount', 'Customer Retention', 150000, 'Young Adults', '2024-10-20', 202410),
+--    (202411, 'Seasonal Offers', 'Lead Generation', 50000, 'Shoppers', '2024-11-05', 202411),
+--    (202412, 'Easter Promotions', 'User Engagement', 75000, 'Families', '2024-12-01', 202412),
+--    (202501, 'Spring Launch', 'Increase Sales', 100000, 'Professionals', '2025-01-01', 202501),
+--    (202502, 'Black Friday Deals', 'Brand Awareness', 120000, 'Teens', '2025-02-10', 202502),
+--    (202503, 'New Year Special', 'Product Launch', 150000, 'Students', '2025-03-15', 202503),
+--    (202504, 'Summer Clearance', 'Customer Retention', 50000, 'Shoppers', '2025-04-20', 202504),
+--    (202505, 'Holiday Event', 'Lead Generation', 75000, 'Families', '2025-05-01', 202505);
+
+
+--INSERT INTO [Works in] (SSID, WIMCID)
+--VALUES
+--    (2020001, 202401),
+--    (2020002, 202402),
+--    (2020003, 202403),
+--    (2021001, 202404),
+--    (2021002, 202405),
+--    (2021003, 202406),
+--    (2022001, 202407),
+--    (2022002, 202408),
+--    (2022003, 202409),
+--    (2022004, 202410),
+--    (2023001, 202411),
+--    (2023002, 202412),
+--    (2023003, 202501),
+--    (2023004, 202502),
+--    (2023005, 202503),
+--    (2024001, 202504),
+--    (2024002, 202505);
+
+
+--ALTER TABLE [Customer Support & Feedback]
+--    ALTER COLUMN [Customer Name] CHAR(100);
+
+
+
+--INSERT INTO [Customer Support & Feedback] (STID, [Customer Name], [Issue description], Rating)
+--VALUES
+--    (3456, 'AhmedAli', 'Product packaging was damaged upon arrival', 3),
+--    (4892, 'MonaHassan', 'Laptop performance was slower than expected', 2),
+--    (5201, 'YoussefIbrahim', 'Smartphone price was higher than advertised', 1),
+--    (6632, 'SamiraGamal', 'Received a defective camera lens in the package', 4),
+--    (7109, 'MohamedZaki', 'Shipping took longer than promised', 3),
+--    (8345, 'HossamAhmed', 'Smartphone arrived with a cracked screen', 2),
+--    (9017, 'DinaMahmoud', 'Laptop was great, but packaging was poor', 4),
+--    (1074, 'TamerFathy', 'Camera works fine but was overpriced', 3),
+--    (1128, 'LailaOmar', 'Accessories were missing in the package', 2),
+--    (1532, 'RaniaMostafa', 'Laptop battery life is disappointing', 3),
+--    (1789, 'ZainabSalah', 'Smartphone quality was excellent but shipping was delayed', 5),
+--    (2104, 'KhaledGhaly', 'Price of the camera was too high for the features', 3),
+--    (2231, 'FatmaHussein', 'The camera I received was not as advertised', 2),
+--    (2564, 'SherifAbdelrahman', 'Excellent smartphone, arrived on time', 5),
+--    (2785, 'AliZaki', 'Laptop packaging was secure, but the price was a bit high', 4),
+--    (3124, 'MahaSayed', 'Received the wrong laptop model', 1),
+--    (3320, 'TarekGaber', 'Smartphone screen flickers after 3 days of use', 2),
+--    (3510, 'NohaTamer', 'Camera arrived in perfect condition, very happy with the price', 5),
+--    (3809, 'RamyMahmoud', 'Laptop screen has discoloration, very disappointed', 1),
+--    (4043, 'ReemZaki', 'The smartphone�s camera quality is amazing, shipping was fast', 5),
+--    (4236, 'AmrMohamed', 'Accessories were faulty, not working as expected', 2),
+--    (4419, 'AminaTarek', 'Laptop arrived on time, but with some scratches', 3),
+--    (4671, 'HassanElMasry', 'Camera lens was scratched, not happy with packaging', 2),
+--    (4853, 'KhaledRamadan', 'Smartphone works well, but it was overpriced', 4),
+--    (5012, 'FaridaFathy', 'Accessories were a great deal for the price', 5),
+--    (5267, 'MoustafaShaban', 'Laptop had a software issue upon arrival', 3),
+--    (5403, 'HalaYoussef', 'Camera�s performance is poor compared to the price', 2),
+--    (5624, 'SalahIbrahim', 'Smartphone came in perfect condition, very satisfied', 5),
+--    (5765, 'MahmoudRami', 'Laptop�s packaging was inadequate, damaged during shipment', 1),
+--    (5942, 'SamihaFarouk', 'Camera was great but overpriced', 3),
+--    (6025, 'AmiraHassan', 'Accessories arrived as expected, quality was good', 4),
+--    (6174, 'OmarAli', 'Laptop shipped quickly, but had a few scratches', 3),
+--    (6319, 'ZakiGamal', 'Smartphone arrived with a broken charging port', 2),
+--    (6492, 'RaniaAbdelrahman', 'Shipping was quick, but camera was defective', 3),
+--    (6615, 'FatmaZaki', 'Accessories were affordable but didn�t meet expectations', 2),
+--    (6721, 'YasminFathy', 'Smartphone�s price was justified by its performance', 5),
+--    (6889, 'MahmoudGaber', 'Laptop screen was faulty, very disappointing', 1),
+--    (7033, 'ReemMahmoud', 'Accessories arrived without all the pieces', 2),
+--    (7160, 'FadyYoussef', 'Camera works perfectly, no issues at all', 5),
+--    (7284, 'HossamZaki', 'Laptop was shipped quickly but arrived with scratches', 3),
+--    (7350, 'MahaGaber', 'Smartphone is great, but the price was too high', 4),
+--    (7429, 'YoussefSayed', 'Laptop had a defective screen', 1),
+--    (7520, 'DaliaOmar', 'Packaging was great, but the camera is underperforming', 3),
+--    (7681, 'AliMohamed', 'Accessories worked as expected, price was good', 4);
+
+
+--INSERT INTO Reviews (RCID, RSSN, RSTID)
+--VALUES
+--(1001, 'AAP101', 1074),
+--(1007, 'AAP102', 1128),
+--(1013, 'AAP103', 1532),
+--(1025, 'AAP104', 1789),
+--(1042, 'AAP999', 2104),
+--(1068, 'ASD123', 2231),
+--(1093, 'ASD124', 2564),
+--(1101, 'ASD125', 2785),
+--(1124, 'ASD126', 3124),
+--(1156, 'ASD127', 3320),
+--(1187, 'CNL888', 3456),
+--(1203, 'CNL889', 3510),
+--(1228, 'CNL890', 3809),
+--(1246, 'CNL891', 4043),
+--(1275, 'DLX789', 4236),
+--(1309, 'DLX790', 4419),
+--(1331, 'DLX791', 4671),
+--(1358, 'DLX792', 4853),
+--(1389, 'DLX793', 4892),
+--(1412, 'DLX794', 5012),
+--(1445, 'DLX795', 5201),
+--(1467, 'DLX796', 5267),
+--(1490, 'DLX797', 5403),
+--(1512, 'DLX798', 5624),
+--(1534, 'FUJ666', 5765),
+--(1568, 'FUJ667', 5942),
+--(1596, 'FUJ668', 6025),
+--(1622, 'FUJ669', 6174),
+--(1648, 'FUJ670', 6319),
+--(1670, 'GGP501', 6492),
+--(1695, 'GGP502', 6615),
+--(1720, 'GGP503', 6632),
+--(1742, 'GGP504', 6721),
+--(1776, 'HON444', 6889),
+--(1798, 'HON445', 7033),
+--(1821, 'HON446', 7109),
+--(1843, 'HON447', 7160),
+--(1872, 'HON448', 7284),
+--(1901, 'HPX456', 7350),
+--(1926, 'HPX457', 7429),
+--(1954, 'HPX458', 7520),
+--(1982, 'HPX459', 8345),
+--(2010, 'HPX460', 9017),
+--(2034, 'HPX461', 1074);
